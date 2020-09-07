@@ -5,3 +5,11 @@
     align-items: center;
     min-height: 120px;
 }
+
+@media screen and (max-width: 645px) {
+    .profile {
+        flex-direction: column;
+        width: 282px;
+        margin: auto;
+    }
+}

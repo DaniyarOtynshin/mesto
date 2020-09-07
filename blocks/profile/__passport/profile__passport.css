@@ -2,3 +2,9 @@
     display: flex;
     align-items: center;
 }
+
+@media screen and (max-width: 645px) {
+    .profile__passport {
+        flex-direction: column;
+    }
+}
