@@ -4,6 +4,9 @@
     border: 2px solid #FFFFFF;
     box-sizing: border-box;
     border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile__add-button:hover{
