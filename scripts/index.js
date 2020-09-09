@@ -8,7 +8,7 @@ let popupDescription = popup.querySelector('[name="fdescription"]');
 
 let editButton = document.querySelector('.profile__edit-button');
 let closeButton = document.querySelector('.popup__close-button');
-let saveButton = document.querySelector('.popup__submit-button');
+let form = document.querySelector('.popup__card');
 
 let popupOpen = function () {
     popup.classList.toggle('popup_active')
@@ -25,4 +25,4 @@ let editInfo = function (event) {
 
 editButton.addEventListener('click', popupOpen)
 closeButton.addEventListener('click', popupOpen)
-saveButton.addEventListener('submit', editInfo)
+form.addEventListener('submit', editInfo)
