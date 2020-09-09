@@ -1,7 +1,7 @@
 .popup__text{
     box-sizing: border-box;
     width: calc(100% - 72px);
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-size: 14px;
     line-height: 17px;
     color: #000000;
