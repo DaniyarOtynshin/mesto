@@ -10,8 +10,6 @@ let editButton = document.querySelector('.profile__edit-button');
 let closeButton = document.querySelector('.popup__close-button');
 let form = document.querySelector('.popup__card');
 
-console.log(popup.classList.contains)
-
 let popupOpen = function () {
     popup.classList.toggle('popup_active')
     if (popup.classList.contains('popup_active')) {
