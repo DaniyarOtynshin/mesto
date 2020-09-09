@@ -1,26 +1,28 @@
 const popup = document.querySelector('.popup');
 
-let profile__name = document.querySelector('.profile__name');
-let profile__description = document.querySelector('.profile__description');
+let profileName = document.querySelector('.profile__name');
+let profileDescription = document.querySelector('.profile__description');
 
-let popup__name = popup.querySelector('[name="fname"]');
-let popup__description = popup.querySelector('[name="fdescription"]');
+let popupName = popup.querySelector('[name="fname"]');
+let popupDescription = popup.querySelector('[name="fdescription"]');
 
-let edit_button = document.querySelector('.profile__edit-button');
-let close_button = document.querySelector('.popup__close-button');
-let save_button = document.querySelector('.popup__submit-button');
+let editButton = document.querySelector('.profile__edit-button');
+let closeButton = document.querySelector('.popup__close-button');
+let saveButton = document.querySelector('.popup__submit-button');
 
-let popup_open = function () {
+let popupOpen = function () {
     popup.classList.toggle('popup_active')
+    popupName.value = profileName.textContent
+    popupDescription.value = profileDescription.textContent
 }
 
-let edit_info = function () {
-    profile__name.textContent = popup__name.value;
-    profile__description.textContent = popup__description.value;
-    popup.classList.toggle('popup_active')
+let editInfo = function (event) {
+    event.preventDefault()
+    profileName.textContent = popupName.value;
+    profileDescription.textContent = popupDescription.value;
+    popupOpen()
 }
 
-edit_button.addEventListener('click', popup_open)
-close_button.addEventListener('click', popup_open)
-save_button.addEventListener('click', edit_info)
-
+editButton.addEventListener('click', popupOpen)
+closeButton.addEventListener('click', popupOpen)
+saveButton.addEventListener('submit', editInfo)
