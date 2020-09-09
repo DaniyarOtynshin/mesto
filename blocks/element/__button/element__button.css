@@ -1,9 +1,10 @@
 .element__button{
-    width: 20.76px;
+    width: 21px;
     height: 18.13px;
     margin: 0;
     background: transparent;
     background-image: url(../../../images/Group.svg);
+    background-repeat: no-repeat;
     border: none;
 }
 
