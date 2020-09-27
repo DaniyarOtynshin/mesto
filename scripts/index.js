@@ -3,12 +3,19 @@ const popup = document.querySelector('.popup');
 let profileName = document.querySelector('.profile__name');
 let profileDescription = document.querySelector('.profile__description');
 
-let popupName = popup.querySelector('[name="fname"]');
-let popupDescription = popup.querySelector('[name="fdescription"]');
+let popupFirstLine = popup.querySelector('[name="first-line"]');
+let popupSecondLine = popup.querySelector('[name="second-line"]');
 
 let editButton = document.querySelector('.profile__edit-button');
 let closeButton = document.querySelector('.popup__close-button');
+let addButton = document.querySelector('.profile__add-button');
 let form = document.querySelector('.popup__card');
+
+const cardsTemplate = document.querySelector('.template').content;
+const grid = document.querySelector('.elements__grid');
+
+const state = { mode: 'edit' };
+
 
 const initialCards = [
     {
@@ -37,12 +44,17 @@ const initialCards = [
     }
 ];
 
-const cardsTemplate = document.querySelector('.template').content;
-const grid = document.querySelector('.elements__grid');
-
 function render() {
+    reset();
     initialCards.forEach(renderItem);
+    setListeners();
 };
+
+function reset() {
+    grid.innerHTML = '';
+    state.mode = 'add';
+    document.querySelector('.popup__title').textContent = 'Редактировать профиль';
+}
 
 function renderItem(card, index) {
     const htmlElement = cardsTemplate.cloneNode(true);
@@ -55,23 +67,40 @@ function renderItem(card, index) {
     grid.appendChild(htmlElement);
 };
 
-let popupOpen = function () {
-    popup.classList.toggle('popup_active')
+function setListeners() {
+    editButton.addEventListener('click', handleEditInfo);
+    closeButton.addEventListener('click', handlePopupToggle);
+    addButton.addEventListener('click', handleAdd);
+    form.addEventListener('submit', handleSubmit);
+}
+
+let handlePopupToggle = function () {
+    popup.classList.toggle('popup_active');
+    popupFirstLine.value = null;
+    popupSecondLine.value = null;
+};
+
+let handleEditInfo = function () {
+    handlePopupToggle();
+    state.mode = 'edit';
     if (popup.classList.contains('popup_active')) {
-        popupName.value = profileName.textContent
-        popupDescription.value = profileDescription.textContent
+        popupFirstLine.value = profileName.textContent
+        popupSecondLine.value = profileDescription.textContent
+    };
+}
+
+let handleAdd = function () {
+    handlePopupToggle();
+    document.querySelector('.popup__title').textContent = 'Новое место';
+}
+
+let handleSubmit = function (event) {
+    if (state.mode === 'edit') {
+        event.preventDefault();
+        profileName.textContent = popupFirstLine.value;
+        profileDescription.textContent = popupSecondLine.value;
+        handlePopupToggle();
     }
 };
-
-let editInfo = function (event) {
-    event.preventDefault()
-    profileName.textContent = popupName.value;
-    profileDescription.textContent = popupDescription.value;
-    popupOpen()
-};
-
-editButton.addEventListener('click', popupOpen);
-closeButton.addEventListener('click', popupOpen);
-form.addEventListener('submit', editInfo);
 
 render();
