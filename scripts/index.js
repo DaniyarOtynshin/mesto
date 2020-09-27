@@ -9,6 +9,7 @@ let popupSecondLine = popup.querySelector('[name="second-line"]');
 let editButton = document.querySelector('.profile__edit-button');
 let closeButton = document.querySelector('.popup__close-button');
 let addButton = document.querySelector('.profile__add-button');
+let submitButton = document.querySelector('.popup__submit-button');
 let form = document.querySelector('.popup__card');
 
 const cardsTemplate = document.querySelector('.template').content;
@@ -45,16 +46,9 @@ const initialCards = [
 ];
 
 function render() {
-    reset();
     initialCards.forEach(renderItem);
     setListeners();
 };
-
-function reset() {
-    grid.innerHTML = '';
-    state.mode = 'add';
-    document.querySelector('.popup__title').textContent = 'Редактировать профиль';
-}
 
 function renderItem(card, index) {
     const htmlElement = cardsTemplate.cloneNode(true);
@@ -72,7 +66,7 @@ function setListeners() {
     closeButton.addEventListener('click', handlePopupToggle);
     addButton.addEventListener('click', handleAdd);
     form.addEventListener('submit', handleSubmit);
-}
+};
 
 let handlePopupToggle = function () {
     popup.classList.toggle('popup_active');
@@ -84,14 +78,28 @@ let handleEditInfo = function () {
     handlePopupToggle();
     state.mode = 'edit';
     if (popup.classList.contains('popup_active')) {
+        document.querySelector('.popup__title').textContent = 'Редактировать профиль';
         popupFirstLine.value = profileName.textContent
         popupSecondLine.value = profileDescription.textContent
+        submitButton.textContent = 'Сохранить'
     };
-}
+};
 
 let handleAdd = function () {
     handlePopupToggle();
     document.querySelector('.popup__title').textContent = 'Новое место';
+    popupFirstLine.setAttribute('placeholder', 'Название');
+    popupSecondLine.setAttribute('placeholder', 'Ссылка на картинку');
+    submitButton.textContent = 'Создать';
+    state.mode = 'add';
+};
+
+let addCard = function (name, link) {
+    const htmlElement = cardsTemplate.cloneNode(true);
+    htmlElement.querySelector('.element__image').setAttribute('src', link);
+    htmlElement.querySelector('.element__image').setAttribute('alt', name);
+    htmlElement.querySelector('.element__title').textContent = name;
+    grid.prepend(htmlElement);
 }
 
 let handleSubmit = function (event) {
@@ -99,6 +107,13 @@ let handleSubmit = function (event) {
         event.preventDefault();
         profileName.textContent = popupFirstLine.value;
         profileDescription.textContent = popupSecondLine.value;
+        handlePopupToggle();
+    }
+    else if (state.mode === 'add') {
+        event.preventDefault();
+        let name = popupFirstLine.value;
+        let link = popupSecondLine.value;
+        addCard(name, link);
         handlePopupToggle();
     }
 };
