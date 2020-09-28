@@ -50,14 +50,13 @@ function render() {
     setListeners();
 };
 
-function renderItem(card, index) {
+function renderItem(card) {
     const htmlElement = cardsTemplate.cloneNode(true);
     const link = card.link;
     const name = card.name;
     htmlElement.querySelector('.element__image').setAttribute('src', link);
     htmlElement.querySelector('.element__image').setAttribute('alt', name);
     htmlElement.querySelector('.element__title').textContent = name;
-    htmlElement.querySelector('.element').setAttribute('id', index);
     grid.appendChild(htmlElement);
 };
 
@@ -65,6 +64,9 @@ function setListeners() {
     editButton.addEventListener('click', handleEditInfo);
     closeButton.addEventListener('click', handlePopupToggle);
     addButton.addEventListener('click', handleAdd);
+    document.querySelectorAll('.element__button').forEach((button) => {
+        button.addEventListener('click', handleLike);
+    });
     form.addEventListener('submit', handleSubmit);
 };
 
@@ -72,6 +74,10 @@ let handlePopupToggle = function () {
     popup.classList.toggle('popup_active');
     popupFirstLine.value = null;
     popupSecondLine.value = null;
+};
+
+let handleLike = function (event) {
+    event.target.classList.toggle('element__button_active');
 };
 
 let handleEditInfo = function () {
@@ -99,6 +105,7 @@ let addCard = function (name, link) {
     htmlElement.querySelector('.element__image').setAttribute('src', link);
     htmlElement.querySelector('.element__image').setAttribute('alt', name);
     htmlElement.querySelector('.element__title').textContent = name;
+    htmlElement.querySelector('.element__button').addEventListener('click', handleLike);
     grid.prepend(htmlElement);
 }
 
