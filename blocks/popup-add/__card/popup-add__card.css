@@ -1,0 +1,13 @@
+.popup-add__card{
+    max-width: 430px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    position: relative;
+}
+
+@media screen and (max-width: 500px) {
+    .popup-add__card{
+        width: calc(100% - 30px);
+    }
+}

@@ -37,20 +37,29 @@
     <footer class="footer page__footer">
       <p class="footer__text">© 2020 Mesto Russia</p>
     </footer>
-    <section class="popup">
-      <form name="edit-info" class="popup__card">
+    <section class="popup-edit">
+      <form name="info" class="popup__card">
         <button type="button" class="popup__close-button"></button>
-        <h2 class="popup__title"></h2>
-        <input type="text" name="first-line" class="popup__text">
-        <input type="text" name="second-line" class="popup__text">
-        <button type="submit" class="popup__submit-button"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input type="text" name="name" class="popup__text">
+        <input type="text" name="description" class="popup__text">
+        <button type="submit" class="popup__submit-button">Сохранить</button>
       </form>
     </section>
-    <section class="image-popup">
-      <div class="image-popup__pic">
-        <button type="button" class="image-popup__close-button"></button>
-        <img class="image-popup__image">
-        <h2 class="image-popup__title"></h2>
+    <section class="popup-add">
+      <form name="info" class="popup-add__card">
+        <button type="button" class="popup__close-button"></button>
+        <h2 class="popup-add__title">Новое место</h2>
+        <input type="text" name="title" placeholder="Название" class="popup__text">
+        <input type="text" name="link" placeholder="Ссылка на картинку" class="popup__text">
+        <button type="submit" class="popup-add__submit-button">Создать</button>
+      </form>
+    </section>
+    <section class="popup-image">
+      <div class="popup-image__pic">
+        <button type="button" class="popup__close-button"></button>
+        <img class="popup-image__image">
+        <h2 class="popup-image__title"></h2>
       </div>
     </section>
   </div>
