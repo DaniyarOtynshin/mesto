@@ -1,5 +1,5 @@
-const popupAdd = document.querySelector('.popup-add');
-const popupEdit = document.querySelector('.popup-edit');
+const popupAdd = document.querySelector('.popup_add');
+const popupEdit = document.querySelector('.popup_edit');
 const popupImage = document.querySelector('.popup-image');
 
 const profileName = document.querySelector('.profile__name');
@@ -12,10 +12,10 @@ const popupFirstLine = popupAdd.querySelector('[name="title"]');
 const popupSecondLine = popupAdd.querySelector('[name="link"]');
 
 const editButton = document.querySelector('.profile__edit-button');
-const closeButtons = document.querySelectorAll('.popup__close-button');
+const closeButtons = document.querySelectorAll('.popup__button');
 const addButton = document.querySelector('.profile__add-button');
-const formEdit = document.querySelector('.popup__card');
-const formAdd = document.querySelector('.popup-add__card');
+const formEdit = document.querySelector('.popup__form_edit');
+const formAdd = document.querySelector('.popup__form_add');
 const imageCloseButton = document.querySelector('.popup-image__close-button');
 
 const cardsTemplate = document.querySelector('.template').content;
@@ -57,10 +57,18 @@ const render = function () {
 
 const openPopup = function(popup) {
     popup.classList.add('popup_active');
+    addEventListener('click', event => closePopup(event));
+    addEventListener('keyup', event => {
+        if (event.key === 'Escape') {
+            popup.classList.remove('popup_active');
+        }
+    });
 }
 
 const closePopup = function(event) {
     event.target.closest('section').classList.remove('popup_active');
+    removeEventListener('click', event => closePopup(event));
+    formAdd.reset()
 }
 
 const handleImagePopup = function (event) {
@@ -122,8 +130,7 @@ const handleAddSubmit = function (event) {
     const popupLink = popupSecondLine.value;
     createCard(popupTitle, popupLink);
     closePopup(event);
-    popupFirstLine.value = null;
-    popupSecondLine.value = null;
+    formAdd.reset()
 }
 
 editButton.addEventListener('click', handleEditInfo);

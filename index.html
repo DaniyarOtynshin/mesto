@@ -37,27 +37,39 @@
     <footer class="footer page__footer">
       <p class="footer__text">© 2020 Mesto Russia</p>
     </footer>
-    <section class="popup-edit">
-      <form name="info" class="popup__card">
-        <button type="button" class="popup__close-button"></button>
+    <section class="popup popup_edit">
+      <form name="info" class="popup__form popup__form_edit" novalidate>
+        <button type="button" class="popup__button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input type="text" name="name" class="popup__text">
-        <input type="text" name="description" class="popup__text">
+        <section class="popup__section">
+          <input type="text" minlength="2" maxlength="40" name="name" id="name-input" required placeholder="Имя" class="popup__input">
+          <span class="popup__input-error" id="name-input-error"></span>
+        </section>
+        <section class="popup__section">
+          <input type="text" minlength="2" maxlength="200" name="description" id="description-input" required placeholder="О себе" class="popup__input">
+          <span class="popup__input-error" id="description-input-error"></span>
+        </section>
         <button type="submit" class="popup__submit-button">Сохранить</button>
       </form>
     </section>
-    <section class="popup-add">
-      <form name="info" class="popup-add__card">
-        <button type="button" class="popup__close-button"></button>
-        <h2 class="popup-add__title">Новое место</h2>
-        <input type="text" name="title" placeholder="Название" class="popup__text">
-        <input type="text" name="link" placeholder="Ссылка на картинку" class="popup__text">
-        <button type="submit" class="popup-add__submit-button">Создать</button>
+    <section class="popup popup_add">
+      <form name="info" class="popup__form popup__form_add" novalidate>
+        <button type="button" class="popup__button"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <section class="popup__section">
+          <input type="text" minlength="2" maxlength="30" name="title" id="title-input" required placeholder="Название" class="popup__input">
+          <span class="popup__input-error" id="title-input-error"></span>
+        </section>
+        <section class="popup__section">
+          <input type="url" name="link" id="link-input" required placeholder="Ссылка на картинку" class="popup__input">
+          <span class="popup__input-error" id="link-input-error"></span>
+        </section>
+        <button type="submit" class="popup__submit-button">Создать</button>
       </form>
     </section>
     <section class="popup-image">
       <div class="popup-image__pic">
-        <button type="button" class="popup__close-button"></button>
+        <button type="button" class="popup__button"></button>
         <img class="popup-image__image">
         <h2 class="popup-image__title"></h2>
       </div>
@@ -74,5 +86,6 @@
     </li>
   </template>
   <script src="./scripts/index.js" defer></script>
+  <script src="./scripts/validate.js" defer></script>
   </body>
 </html>
