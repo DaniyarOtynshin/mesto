@@ -59,11 +59,14 @@ const render = function () {
 const openPopup = function(popup) {
     popup.classList.add('popup_active');
     popup.addEventListener('click', closePopup);
-    document.addEventListener('keyup', closeEscape);
+    addEscapeListener();
 }
 
+const addEscapeListener = function() {
+    document.addEventListener('keyup', closeEscape);
+};
+
 const closePopup = function(event) {
-    console.log(event.target);
     if (event.target == event.currentTarget) {
         event.target.closest('section').classList.remove('popup_active');
         document.removeEventListener('click', closePopup);
