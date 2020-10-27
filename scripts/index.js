@@ -1,3 +1,4 @@
+const popupList = Array.from(document.querySelectorAll('.popup'));
 const popupAdd = document.querySelector('.popup_add');
 const popupEdit = document.querySelector('.popup_edit');
 const popupImage = document.querySelector('.popup-image');
@@ -53,22 +54,36 @@ const render = function () {
     initialCards.forEach((card) => {
         createCard(card.name, card.link);
     });
-};
+}
 
 const openPopup = function(popup) {
     popup.classList.add('popup_active');
-    addEventListener('click', event => closePopup(event));
-    addEventListener('keyup', event => {
-        if (event.key === 'Escape') {
-            popup.classList.remove('popup_active');
-        }
-    });
+    popup.addEventListener('click', closePopup);
+    document.addEventListener('keyup', closeEscape);
 }
 
 const closePopup = function(event) {
-    event.target.closest('section').classList.remove('popup_active');
-    removeEventListener('click', event => closePopup(event));
-    formAdd.reset()
+    console.log(event.target);
+    if (event.target == event.currentTarget) {
+        event.target.closest('section').classList.remove('popup_active');
+        document.removeEventListener('click', closePopup);
+        document.removeEventListener('keyup', closeEscape);
+        formAdd.reset()
+    }
+}
+
+const isPopupActive = function(popup) {
+    if (popup.classList.contains('popup_active')) {
+        popup.classList.remove('popup_active');
+    }
+}
+
+const closeEscape = function(event) {
+    if (event.key === 'Escape') {
+        popupList.forEach(isPopupActive);
+        isPopupActive(popupImage);
+    }
+    document.removeEventListener('keyup', closeEscape)
 }
 
 const handleImagePopup = function (event) {
@@ -82,7 +97,7 @@ const handleImagePopup = function (event) {
 
 const handleLike = function (event) {
     event.target.classList.toggle('element__button_active');
-};
+}
 
 const handleDelete = function(event) {
     const card = event.target.parentNode;
@@ -95,11 +110,11 @@ const handleEditInfo = function () {
         popupName.value = profileName.textContent
         popupDescription.value = profileDescription.textContent
     };
-};
+}
 
 const handleAddPopup = function () {
     openPopup(popupAdd);
-};
+}
 
 const createCard = function (name, link) {
     const newCard = cardsTemplate.cloneNode(true);
@@ -122,7 +137,7 @@ const handleEditSubmit = function (event) {
     profileName.textContent = popupName.value;
     profileDescription.textContent = popupDescription.value;
     closePopup(event);
-};
+}
 
 const handleAddSubmit = function (event) {
     event.preventDefault();
