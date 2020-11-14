@@ -119,22 +119,6 @@ const handleAddPopup = function () {
     openPopup(popupAdd);
 }
 
-const createCard = function (name, link) {
-    const newCard = cardsTemplate.cloneNode(true);
-    const elementImage = newCard.querySelector('.element__image');
-    elementImage.setAttribute('src', link);
-    elementImage.setAttribute('alt', name);
-    elementImage.addEventListener('click', handleImagePopup);
-    newCard.querySelector('.element__title').textContent = name;
-    newCard.querySelector('.element__button').addEventListener('click', handleLike);
-    newCard.querySelector('.element__delete').addEventListener('click', handleDelete);
-    addCard(newCard);
-}
-
-const addCard = function (newCard) {
-    grid.prepend(newCard);
-}
-
 const handleEditSubmit = function (event) {
     event.preventDefault();
     profileName.textContent = popupName.value;
