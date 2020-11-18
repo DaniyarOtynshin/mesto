@@ -1,29 +1,7 @@
-import { formAdd, formEdit, popupName,
-    profileName, popupDescription, profileDescription, popupFirstLine, popupSecondLine }
-    from "./constants.js";
-import { closePopup } from "./utils.js";
-import { addCard } from "./index.js";
-
 export class FormValidator{
     constructor(parameters, formToValidate) {
         this._parameters = parameters;
         this._form = formToValidate;
-    }
-
-    _handleEditSubmit(event) {
-        event.preventDefault();
-        profileName.textContent = popupName.value;
-        profileDescription.textContent = popupDescription.value;
-        closePopup(event);
-    }
-    
-    _handleAddSubmit(event) {
-        event.preventDefault();
-        const popupTitle = popupFirstLine.value;
-        const popupLink = popupSecondLine.value;
-        addCard({name: popupTitle, link: popupLink});
-        closePopup(event);
-        formAdd.reset()
     }
 
     _showInputError(formElement, inputElement, errorMessage, params) {
@@ -76,12 +54,7 @@ export class FormValidator{
     };
 
     enableValidation() {
-        this._form.addEventListener('submit', function(event) {
-            event.preventDefault();
-        })
         this._setEventListeners(this._form, this._parameters);
-        formEdit.addEventListener('submit', this._handleEditSubmit); 
-        formAdd.addEventListener('submit', this._handleAddSubmit); 
     }
 
 
