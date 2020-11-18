@@ -1,3 +1,9 @@
+import { formAdd, formEdit, popupName,
+    profileName, popupDescription, profileDescription, popupFirstLine, popupSecondLine }
+    from "./constants.js";
+import { closePopup } from "./utils.js";
+import { addCard } from "./index.js";
+
 export class FormValidator{
     constructor(parameters, formToValidate) {
         this._parameters = parameters;
@@ -26,14 +32,14 @@ export class FormValidator{
         inputElement.classList.add(params.inputErrorClass);
         errorElement.classList.add(params.errorClass);
     };
-      
+
     _hideInputError(formElement, inputElement, params) {
         const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
         errorElement.textContent = '';
         inputElement.classList.remove(params.inputErrorClass);
         errorElement.classList.remove(params.errorClass);
     };
-    
+
     _checkInputValidity(formElement, inputElement, params) {
       const inputNotVaild = !inputElement.validity.valid
       if (inputNotVaild) {
@@ -43,7 +49,7 @@ export class FormValidator{
         this._hideInputError(formElement, inputElement, params);
       }
     };
-    
+
     _toggleButtonState(inputList, buttonElement, params) {
       const hasInvalidInput = inputList.some(
         (inputElement) => !inputElement.validity.valid
@@ -56,27 +62,27 @@ export class FormValidator{
           buttonElement.removeAttribute('disabled')
       }
     };
-    
+
     _setEventListeners(formElement, params) {
         const inputList = Array.from(formElement.querySelectorAll(params.inputSelector));
         const buttonElement = formElement.querySelector(params.submitButtonSelector);
         inputList.forEach((inputElement) => {
-          inputElement.addEventListener('input', function () {
+          inputElement.addEventListener('input', () => {
             this._checkInputValidity(formElement, inputElement, params);
             this._toggleButtonState(inputList, buttonElement, params);
           });
         });
         this._toggleButtonState(inputList, buttonElement, params);
     };
-    
-    _enableValidation(params) {
-        const formList = Array.from(document.querySelectorAll(params.formSelector));
-        formList.forEach((formElement) => {
-          formElement.addEventListener('submit', (evt) => {
-            evt.preventDefault();
-          });
-          this._setEventListeners(formElement, params);
-        });
-    };
+
+    enableValidation() {
+        this._form.addEventListener('submit', function(event) {
+            event.preventDefault();
+        })
+        this._setEventListeners(this._form, this._parameters);
+        formEdit.addEventListener('submit', this._handleEditSubmit); 
+        formAdd.addEventListener('submit', this._handleAddSubmit); 
+    }
+
 
 }

@@ -1,7 +1,7 @@
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 import { openPopup, closePopup } from "./utils.js";
-import {editButton, addButton, formAdd, formEdit, closeButtons,
+import {editButton, addButton, closeButtons,
     popupEdit, popupName, profileName, popupDescription,
     profileDescription, popupAdd} from "./constants.js";
 
@@ -43,10 +43,17 @@ const initialCards = [
     }
 ];
 
-const addCard = (card) => {
+export const addCard = (card) => {
     const newCard = new Card(card);
     newCard.render(container);
 }
+
+const enableValidation = (form) => {
+    const formToValidate = new FormValidator(formParameters, form);
+    formToValidate.enableValidation();
+}
+
+const formList = Array.from(document.querySelectorAll('.popup__form'));
 
 const handleEditInfo = function() {
     openPopup(popupEdit);
@@ -60,14 +67,12 @@ const handleAddPopup = function() {
     openPopup(popupAdd);
 }
 
-const form1 = new FormValidator(formParameters, formEdit);
-const form2 = new FormValidator(formParameters, formAdd);
-
 closeButtons.forEach((btn) => {
     btn.addEventListener('click', closePopup);
 });
 
 initialCards.forEach(addCard);
+formList.forEach(enableValidation);
 
 editButton.addEventListener('click', handleEditInfo);
 addButton.addEventListener('click', handleAddPopup);
