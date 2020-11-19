@@ -31,8 +31,9 @@ const handleEditInfo = function() {
 const handleAddPopup = function() {
     openPopup(popupAdd);
     formAdd.reset();
-    popupAdd.querySelector('.popup__submit-button').setAttribute('disabled', true);
-    popupAdd.querySelector('.popup__submit-button').classList.add('popup__submit-button_disabled');
+    const popupSubmitButton = popupAdd.querySelector('.popup__submit-button')
+    popupSubmitButton.setAttribute('disabled', true);
+    popupSubmitButton.classList.add('popup__submit-button_disabled');
 }
 
 const handleEditSubmit = function(event) {
