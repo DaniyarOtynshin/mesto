@@ -4,7 +4,7 @@ import { openPopup, closePopup } from "./utils.js";
 import { editButton, addButton, closeButtons,
     popupEdit, popupName, profileName, popupDescription,
     profileDescription, popupAdd, initialCards, formAdd,
-    formEdit, container } from "./constants.js";
+    formEdit, container, popupFirstLine, popupSecondLine } from "./constants.js";
 
 const formParameters = {
     formSelector: '.popup__form',
@@ -30,6 +30,7 @@ const handleEditInfo = function() {
 
 const handleAddPopup = function() {
     openPopup(popupAdd);
+    formAdd.reset();
     popupAdd.querySelector('.popup__submit-button').setAttribute('disabled', true);
 }
 
@@ -37,7 +38,7 @@ const handleEditSubmit = function(event) {
     event.preventDefault();
     profileName.textContent = popupName.value;
     profileDescription.textContent = popupDescription.value;
-    closePopup(event);
+    closePopup();
 }
 
 const handleAddSubmit = function(event) {
@@ -45,8 +46,7 @@ const handleAddSubmit = function(event) {
     const popupTitle = popupFirstLine.value;
     const popupLink = popupSecondLine.value;
     addCard({name: popupTitle, link: popupLink});
-    closePopup(event);
-    formAdd.reset()
+    closePopup();
 }
 
 const formEditClass = new FormValidator(formParameters, formEdit);

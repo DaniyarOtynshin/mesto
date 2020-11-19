@@ -22,7 +22,7 @@ export class Card {
         this._content = null;
     }
 
-    _handleImagePopup(event) {
+    _handleImagePopup = () => {
         openPopup(popupImage);
         popupImage.querySelector('.popup-image__image').setAttribute('src', this._link);
         popupImage.querySelector('.popup-image__title').textContent = this._name;
