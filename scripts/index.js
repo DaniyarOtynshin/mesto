@@ -32,6 +32,7 @@ const handleAddPopup = function() {
     openPopup(popupAdd);
     formAdd.reset();
     popupAdd.querySelector('.popup__submit-button').setAttribute('disabled', true);
+    popupAdd.querySelector('.popup__submit-button').classList.add('popup__submit-button_disabled');
 }
 
 const handleEditSubmit = function(event) {

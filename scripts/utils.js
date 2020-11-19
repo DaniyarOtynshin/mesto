@@ -1,6 +1,6 @@
 const openPopup = function(popup) {
     popup.classList.add('popup_active');
-    popup.addEventListener('click', closeByOverlay);
+    popup.addEventListener('mousedown', closeByOverlay);
     addEscapeListener();
 };
 
@@ -17,7 +17,7 @@ const closePopup = function() {
 
 const closeByOverlay = function(event) {
     if (event.target == event.currentTarget) { 
-        event.target.closest('section').classList.remove('popup_active');
+        closePopup();
     }
 }
 
@@ -25,7 +25,6 @@ const closeEscape = function(event) {
     if (event.key === 'Escape') {
         closePopup();
     }
-    document.removeEventListener('keyup', closeEscape)
 };
 
 export { openPopup, addEscapeListener, closePopup, closeByOverlay, closeEscape } 
