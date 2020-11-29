@@ -1,10 +1,12 @@
-import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
-import { openPopup, closePopup } from "./utils.js";
-import { editButton, addButton, closeButtons,
+import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
+import Section from "./Section.js";
+import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js";
+import { editButton, addButton, closeButtons, popupImage,
     popupEdit, popupName, profileName, popupDescription,
     profileDescription, popupAdd, initialCards, formAdd,
-    formEdit, container, popupFirstLine, popupSecondLine } from "./constants.js";
+    formEdit, popupFirstLine, popupSecondLine } from "./constants.js";
 
 const formParameters = {
     formSelector: '.popup__form',
@@ -15,10 +17,23 @@ const formParameters = {
     errorClass: 'popup__input-error_active'
   }
 
-export const addCard = (card) => {
-    const newCard = new Card(card, '.template');
-    newCard.render(container);
-}
+const cardList = new Section({
+    items: initialCards,
+    renderer: (card) => {
+        const newCard = new Card({
+            data: card,
+            handleCardClick: () => {
+                const popupImage = new PopupWithImage(popupImage);
+                popupImage.open(card);
+            }
+        }, '.template');
+        newCard.render();
+    }
+}, containerSelector);
+
+cardList.renderItems()
+
+
 
 const handleEditInfo = function() {
     openPopup(popupEdit);

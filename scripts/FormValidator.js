@@ -53,13 +53,6 @@ export class FormValidator{
         this._toggleButtonState(inputList, buttonElement, parameters);
     };
 
-    // _resetErrors(formElement) {
-    //   const inputElements = Array.from(formElement.querySelectorAll('.popup__input'));
-    //   inputElements.forEach((input) => {
-    //     input = "";
-    //   })
-    // }
-
     enableValidation() {
         this._setEventListeners(this._form, this._parameters);
     }
