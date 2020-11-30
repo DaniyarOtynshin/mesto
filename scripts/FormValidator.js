@@ -25,7 +25,7 @@ export default class FormValidator{
         this._showInputError(formElement, inputElement, errorMessage, parameters);
       } else {
         this._hideInputError(formElement, inputElement, parameters);
-      }
+      };
     };
 
     _toggleButtonState(inputList, buttonElement, parameters) {
@@ -38,7 +38,7 @@ export default class FormValidator{
       } else {
           buttonElement.classList.remove(parameters.inactiveButtonClass);
           buttonElement.removeAttribute('disabled')
-      }
+      };
     };
 
     _setEventListeners(formElement, parameters) {
@@ -56,6 +56,4 @@ export default class FormValidator{
     enableValidation() {
         this._setEventListeners(this._form, this._parameters);
     };
-
-
 }

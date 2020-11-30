@@ -21,9 +21,9 @@ const formParameters = {
     inactiveButtonClass: 'popup__submit-button_disabled',
     inputErrorClass: 'popup__input_error',
     errorClass: 'popup__input-error_active'
-}
+};
 
-const userInfo = new UserInfo( {profileName: '.profile__name', profileDescription: '.profile__description'} )
+const userInfo = new UserInfo({ profileName: '.profile__name', profileDescription: '.profile__description' });
 
 const renderCard = (card) => {
     const newCard = new Card({
@@ -35,12 +35,14 @@ const renderCard = (card) => {
         }
     }, '.template');
     return newCard.render();
-}
+};
 
 const cardList = new Section({
     items: initialCards,
     renderer: renderCard
-}, containerSelector);
+    },
+    containerSelector
+);
 
 const addForm = new PopupWithForm(
     '.popup_add',
@@ -48,12 +50,12 @@ const addForm = new PopupWithForm(
         const element = renderCard(formData);
         cardList.addItem(element);
     }
-)
+);
 
 const editForm = new PopupWithForm(
     '.popup_edit',
     (formData) => {userInfo.setUserInfo(formData)}
-)
+);
 
 const formEditClass = new FormValidator(formParameters, formEdit);
 const formAddClass = new FormValidator(formParameters, formAdd);
