@@ -1,7 +1,7 @@
-export class FormValidator{
+export default class FormValidator{
     constructor(parameters, formToValidate) {
         this._parameters = parameters;
-        this._form = formToValidate;
+        this._form = document.querySelector(formToValidate);
     }
 
     _showInputError(formElement, inputElement, errorMessage, parameters) {

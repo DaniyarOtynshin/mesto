@@ -1,9 +1,9 @@
-export class Card {
+export default class Card {
     constructor({ data, handleCardClick }, cardSelector) {
         this._name = data.name;
         this._link = data.link;
         this._handleCardClick = handleCardClick;
-        this._cardSelector = document.querySelector(cardSelector);
+        this._cardSelector = cardSelector;
     }
 
     _getTemplate() {
@@ -29,5 +29,6 @@ export class Card {
         this._content.querySelector('.element__title').textContent = this._name;
         this._content.querySelector('.element__button').addEventListener('click', this._handleLike);
         this._content.querySelector('.element__delete').addEventListener('click', this._handleDelete);
+        return this._content;
     }
 }
