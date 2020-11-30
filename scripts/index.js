@@ -25,24 +25,29 @@ const formParameters = {
 
 const userInfo = new UserInfo( {profileName: '.profile__name', profileDescription: '.profile__description'} )
 
+const renderCard = (card) => {
+    const newCard = new Card({
+        data: card,
+        handleCardClick: () => {
+            const popupImage = new PopupWithImage(popupImageSelector);
+            popupImage.setEventListeners();
+            popupImage.open(card);
+        }
+    }, '.template');
+    return newCard.render();
+}
+
 const cardList = new Section({
     items: initialCards,
-    renderer: (card) => {
-        const newCard = new Card({
-            data: card,
-            handleCardClick: () => {
-                const popupImage = new PopupWithImage(popupImageSelector);
-                popupImage.setEventListeners();
-                popupImage.open(card);
-            }
-        }, '.template');
-        return newCard.render();
-    }
+    renderer: renderCard
 }, containerSelector);
 
 const addForm = new PopupWithForm(
     '.popup_add',
-    (formData) => {cardList.renderer(formData)}
+    (formData) => {
+        const element = renderCard(formData);
+        cardList.addItem(element);
+    }
 )
 
 const editForm = new PopupWithForm(

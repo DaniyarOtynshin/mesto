@@ -8,8 +8,8 @@ export default class UserInfo {
         {this._profileName.textContent, this._profileDescription.textContent}
     }
 
-    setUserInfo( {profileName, profileDescription} ) {
-        this._profileName.value = profileName.textContent
-        this._profileDescription.value = profileDescription.textContent
+    setUserInfo( {name, description} ) {
+        this._profileName.textContent = name;
+        this._profileDescription.textContent = description;
     }
 }
