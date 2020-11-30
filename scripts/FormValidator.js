@@ -2,7 +2,7 @@ export default class FormValidator{
     constructor(parameters, formToValidate) {
         this._parameters = parameters;
         this._form = document.querySelector(formToValidate);
-    }
+    };
 
     _showInputError(formElement, inputElement, errorMessage, parameters) {
         const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
@@ -55,7 +55,7 @@ export default class FormValidator{
 
     enableValidation() {
         this._setEventListeners(this._form, this._parameters);
-    }
+    };
 
 
 }
