@@ -1,7 +1,7 @@
 const popupList = Array.from(document.querySelectorAll('.popup'));
 const popupAdd = document.querySelector('.popup_add');
 const popupEdit = document.querySelector('.popup_edit');
-const popupImage = document.querySelector('.popup-image');
+const popupImageSelector = '.popup-image';
 
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
@@ -15,10 +15,10 @@ const popupSecondLine = popupAdd.querySelector('[name="link"]');
 const editButton = document.querySelector('.profile__edit-button');
 const closeButtons = document.querySelectorAll('.popup__button');
 const addButton = document.querySelector('.profile__add-button');
-const formEdit = document.querySelector('.popup__form_edit');
-const formAdd = document.querySelector('.popup__form_add');
+const formEdit = '.popup__form_edit';
+const formAdd = '.popup__form_add';
 const imageCloseButton = document.querySelector('.popup-image__close-button');
-const container = document.querySelector('.elements__grid');
+const containerSelector = '.elements__grid';
 
 const initialCards = [
     {
@@ -47,6 +47,6 @@ const initialCards = [
     }
 ];
 
-export {editButton, addButton, formAdd, formEdit, closeButtons, popupImage,
+export {editButton, addButton, formAdd, formEdit, closeButtons, popupImageSelector,
     popupEdit, popupName, profileName, popupDescription, profileDescription,
-    popupAdd, popupList, popupFirstLine, popupSecondLine, imageCloseButton, initialCards, container };
+    popupAdd, popupList, popupFirstLine, popupSecondLine, imageCloseButton, initialCards, containerSelector };

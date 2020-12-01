@@ -1,8 +1,8 @@
-export class FormValidator{
+export default class FormValidator{
     constructor(parameters, formToValidate) {
         this._parameters = parameters;
-        this._form = formToValidate;
-    }
+        this._form = document.querySelector(formToValidate);
+    };
 
     _showInputError(formElement, inputElement, errorMessage, parameters) {
         const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
@@ -25,7 +25,7 @@ export class FormValidator{
         this._showInputError(formElement, inputElement, errorMessage, parameters);
       } else {
         this._hideInputError(formElement, inputElement, parameters);
-      }
+      };
     };
 
     _toggleButtonState(inputList, buttonElement, parameters) {
@@ -38,7 +38,7 @@ export class FormValidator{
       } else {
           buttonElement.classList.remove(parameters.inactiveButtonClass);
           buttonElement.removeAttribute('disabled')
-      }
+      };
     };
 
     _setEventListeners(formElement, parameters) {
@@ -55,7 +55,5 @@ export class FormValidator{
 
     enableValidation() {
         this._setEventListeners(this._form, this._parameters);
-    }
-
-
+    };
 }
