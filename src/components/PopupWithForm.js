@@ -27,7 +27,15 @@ export default class PopupWithForm extends Popup {
 
     close() {
         super.close();
-        this._popup.querySelector('.popup__form').reset();
+        const form = this._popup.querySelector('.popup__form')
+        form.reset();
+        const inputList = Array.from(form.querySelectorAll('.popup__input'));
+        inputList.forEach((inputElement) => {
+            const errorElement = form.querySelector(`#${inputElement.id}-error`);
+            errorElement.textContent = '';
+            inputElement.classList.remove('popup__input_error');
+            errorElement.classList.remove('popup__input-error_active');
+        });
     };
 
     open() {
