@@ -25,10 +25,7 @@ export default class PopupWithForm extends Popup {
         });
     };
 
-    close() {
-        super.close();
-        const form = this._popup.querySelector('.popup__form')
-        form.reset();
+    resetErrors(form) {
         const inputList = Array.from(form.querySelectorAll('.popup__input'));
         inputList.forEach((inputElement) => {
             const errorElement = form.querySelector(`#${inputElement.id}-error`);
@@ -36,6 +33,13 @@ export default class PopupWithForm extends Popup {
             inputElement.classList.remove('popup__input_error');
             errorElement.classList.remove('popup__input-error_active');
         });
+    }
+
+    close() {
+        super.close();
+        const form = this._popup.querySelector('.popup__form')
+        form.reset();
+        this.resetErrors(form);
     };
 
     open() {
