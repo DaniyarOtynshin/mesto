@@ -1,6 +1,10 @@
 const popupList = Array.from(document.querySelectorAll('.popup'));
 const popupAdd = '.popup_add';
 const popupEdit = '.popup_edit';
+
+const popupName = document.querySelector(popupEdit).querySelector('[name="name"]'); 
+const popupDescription = document.querySelector(popupEdit).querySelector('[name="description"]');
+
 const popupImageSelector = '.popup-image';
 
 const profileName = '.profile__name';
@@ -11,8 +15,10 @@ const cardTemplate = '.template';
 const editButton = document.querySelector('.profile__edit-button');
 const closeButtons = document.querySelectorAll('.popup__button');
 const addButton = document.querySelector('.profile__add-button');
-const formEdit = '.popup__form_edit';
-const formAdd = '.popup__form_add';
+const formEditSelector = '.popup__form_edit';
+const formAddSelector = '.popup__form_add';
+const formEdit = document.querySelector(formEditSelector);
+const formAdd = document.querySelector(formAddSelector);
 const imageCloseButton = document.querySelector('.popup-image__close-button');
 const containerSelector = '.elements__grid';
 
@@ -55,15 +61,19 @@ const formParameters = {
 export {
     editButton,
     addButton,
+    formAddSelector,
+    formEditSelector,
     formAdd,
     formEdit,
     closeButtons,
     cardTemplate,
     popupImageSelector,
+    popupAdd,
     popupEdit,
+    popupName,
+    popupDescription,
     profileName,
     profileDescription,
-    popupAdd,
     popupList,
     imageCloseButton,
     initialCards,

@@ -5,7 +5,9 @@ export default class UserInfo {
     };
 
     getUserInfo() {
-        {this._profileName.textContent, this._profileDescription.textContent}
+        const name = this._profileName.textContent;
+        const description = this._profileDescription.textContent;
+        return {name, description}
     };
 
     setUserInfo( {name, description} ) {

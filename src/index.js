@@ -8,12 +8,16 @@ import {
     editButton,
     addButton,
     initialCards,
+    formAddSelector,
+    formEditSelector,
     formAdd,
     formEdit,
     popupAdd,
     popupEdit,
     containerSelector,
     popupImageSelector,
+    popupName,
+    popupDescription,
     profileName,
     profileDescription,
     formParameters,
@@ -40,21 +44,34 @@ const cardList = new Section({
     containerSelector
 );
 
+const renderForm = function (formType) {
+    if (formType == formAdd) {
+        document.querySelector(popupAdd).querySelector('.popup__submit-button').setAttribute('disabled', true);
+        document.querySelector(popupAdd).querySelector('.popup__submit-button').classList.add('popup__submit-button_disabled'); 
+    } else if (formType == formEdit) {
+        const userData = userInfo.getUserInfo();
+        popupName.value = userData.name;
+        popupDescription.value = userData.description;
+    }
+}
+
 const addCardForm = new PopupWithForm(
     popupAdd,
     (formData) => {
         const element = renderCard(formData);
         cardList.addItem(element);
-    }
+    },
+    renderForm
 );
 
 const editUserProfileForm = new PopupWithForm(
     popupEdit,
-    (formData) => {userInfo.setUserInfo(formData)}
+    (formData) => {userInfo.setUserInfo(formData)},
+    renderForm
 );
 
-const formEditValidator = new FormValidator(formParameters, formEdit);
-const formAddCardValidator = new FormValidator(formParameters, formAdd);
+const formEditValidator = new FormValidator(formParameters, formEditSelector);
+const formAddCardValidator = new FormValidator(formParameters, formAddSelector);
 
 formEditValidator.enableValidation();
 formAddCardValidator.enableValidation();
