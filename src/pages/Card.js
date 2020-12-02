@@ -20,15 +20,19 @@ export default class Card {
         this._content = null;
     };
 
+    _setEventListeners(card) {
+        card.querySelector('.element__image').addEventListener('click', this._handleCardClick);
+        card.querySelector('.element__button').addEventListener('click', this._handleLike);
+        card.querySelector('.element__delete').addEventListener('click', this._handleDelete);
+    }
+
     render() {
         this._content = this._getTemplate();
         const elementImage = this._content.querySelector('.element__image');
         elementImage.setAttribute('alt', this._name);
         elementImage.setAttribute('src', this._link);
-        elementImage.addEventListener('click', this._handleCardClick);
         this._content.querySelector('.element__title').textContent = this._name;
-        this._content.querySelector('.element__button').addEventListener('click', this._handleLike);
-        this._content.querySelector('.element__delete').addEventListener('click', this._handleDelete);
+        this._setEventListeners(this._content);
         return this._content;
     };
 }

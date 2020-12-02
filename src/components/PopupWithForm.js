@@ -1,9 +1,10 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
-    constructor(popupSelector, submitForm, ) {
+    constructor(popupSelector, submitForm, renderer) {
         super(popupSelector);
         this._submitForm = submitForm;
+        this._renderer = renderer;
     };
 
     _getInputValues() {
@@ -24,8 +25,25 @@ export default class PopupWithForm extends Popup {
         });
     };
 
+    resetErrors(form) {
+        const inputList = Array.from(form.querySelectorAll('.popup__input'));
+        inputList.forEach((inputElement) => {
+            const errorElement = form.querySelector(`#${inputElement.id}-error`);
+            errorElement.textContent = '';
+            inputElement.classList.remove('popup__input_error');
+            errorElement.classList.remove('popup__input-error_active');
+        });
+    }
+
     close() {
         super.close();
-        this._popup.querySelector('.popup__form').reset();
+        const form = this._popup.querySelector('.popup__form')
+        form.reset();
+        this.resetErrors(form);
     };
+
+    open() {
+        this._renderer(this._popup.querySelector('.popup__form'));
+        super.open();
+    }
 }

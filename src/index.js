@@ -1,4 +1,4 @@
-import Card from "./components/Card.js";
+import Card from "./pages/Card.js";
 import FormValidator from "./components/FormValidator.js";
 import PopupWithImage from "./components/PopupWithImage.js";
 import PopupWithForm from "./components/PopupWithForm.js";
@@ -8,33 +8,32 @@ import {
     editButton,
     addButton,
     initialCards,
+    formAddSelector,
+    formEditSelector,
     formAdd,
     formEdit,
+    popupAdd,
+    popupEdit,
     containerSelector,
-    popupImageSelector
-} from "./scripts/constants.js";
+    popupImageSelector,
+    popupName,
+    popupDescription,
+    profileName,
+    profileDescription,
+    formParameters,
+    cardTemplate
+} from "./utils/constants.js";
 import "./pages/index.css";
 
-const formParameters = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__submit-button',
-    inactiveButtonClass: 'popup__submit-button_disabled',
-    inputErrorClass: 'popup__input_error',
-    errorClass: 'popup__input-error_active'
-};
+const userInfo = new UserInfo({ profileName: profileName, profileDescription: profileDescription });
+const popupImage = new PopupWithImage(popupImageSelector);
 
-const userInfo = new UserInfo({ profileName: '.profile__name', profileDescription: '.profile__description' });
 
 const renderCard = (card) => {
     const newCard = new Card({
         data: card,
-        handleCardClick: () => {
-            const popupImage = new PopupWithImage(popupImageSelector);
-            popupImage.setEventListeners();
-            popupImage.open(card);
-        }
-    }, '.template');
+        handleCardClick: () => popupImage.open(card)
+    }, cardTemplate);
     return newCard.render();
 };
 
@@ -45,26 +44,40 @@ const cardList = new Section({
     containerSelector
 );
 
-const addForm = new PopupWithForm(
-    '.popup_add',
+const renderForm = function (formType) {
+    if (formType == formAdd) {
+        document.querySelector(popupAdd).querySelector('.popup__submit-button').setAttribute('disabled', true);
+        document.querySelector(popupAdd).querySelector('.popup__submit-button').classList.add('popup__submit-button_disabled'); 
+    } else if (formType == formEdit) {
+        const userData = userInfo.getUserInfo();
+        popupName.value = userData.name;
+        popupDescription.value = userData.description;
+    }
+}
+
+const addCardForm = new PopupWithForm(
+    popupAdd,
     (formData) => {
         const element = renderCard(formData);
         cardList.addItem(element);
-    }
+    },
+    renderForm
 );
 
-const editForm = new PopupWithForm(
-    '.popup_edit',
-    (formData) => {userInfo.setUserInfo(formData)}
+const editUserProfileForm = new PopupWithForm(
+    popupEdit,
+    (formData) => {userInfo.setUserInfo(formData)},
+    renderForm
 );
 
-const formEditClass = new FormValidator(formParameters, formEdit);
-const formAddClass = new FormValidator(formParameters, formAdd);
+const formEditValidator = new FormValidator(formParameters, formEditSelector);
+const formAddCardValidator = new FormValidator(formParameters, formAddSelector);
 
-formEditClass.enableValidation();
-formAddClass.enableValidation();
-editForm.setEventListeners();
-addForm.setEventListeners();
-editButton.addEventListener('click', editForm.open.bind(editForm));
-addButton.addEventListener('click', addForm.open.bind(addForm));
+formEditValidator.enableValidation();
+formAddCardValidator.enableValidation();
+editUserProfileForm.setEventListeners();
+addCardForm.setEventListeners();
+editButton.addEventListener('click', editUserProfileForm.open.bind(editUserProfileForm));
+addButton.addEventListener('click', addCardForm.open.bind(addCardForm));
+popupImage.setEventListeners();
 cardList.renderItems();
