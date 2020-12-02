@@ -1,16 +1,12 @@
 const popupList = Array.from(document.querySelectorAll('.popup'));
-const popupAdd = document.querySelector('.popup_add');
-const popupEdit = document.querySelector('.popup_edit');
+const popupAdd = '.popup_add';
+const popupEdit = '.popup_edit';
 const popupImageSelector = '.popup-image';
 
-const profileName = document.querySelector('.profile__name');
-const profileDescription = document.querySelector('.profile__description');
+const profileName = '.profile__name';
+const profileDescription = '.profile__description';
 
-const popupName = popupEdit.querySelector('[name="name"]');
-const popupDescription = popupEdit.querySelector('[name="description"]');
-
-const popupFirstLine = popupAdd.querySelector('[name="title"]');
-const popupSecondLine = popupAdd.querySelector('[name="link"]');
+const cardTemplate = '.template';
 
 const editButton = document.querySelector('.profile__edit-button');
 const closeButtons = document.querySelectorAll('.popup__button');
@@ -47,6 +43,30 @@ const initialCards = [
     }
 ];
 
-export {editButton, addButton, formAdd, formEdit, closeButtons, popupImageSelector,
-    popupEdit, popupName, profileName, popupDescription, profileDescription,
-    popupAdd, popupList, popupFirstLine, popupSecondLine, imageCloseButton, initialCards, containerSelector };
+const formParameters = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__submit-button',
+    inactiveButtonClass: 'popup__submit-button_disabled',
+    inputErrorClass: 'popup__input_error',
+    errorClass: 'popup__input-error_active'
+};
+
+export {
+    editButton,
+    addButton,
+    formAdd,
+    formEdit,
+    closeButtons,
+    cardTemplate,
+    popupImageSelector,
+    popupEdit,
+    profileName,
+    profileDescription,
+    popupAdd,
+    popupList,
+    imageCloseButton,
+    initialCards,
+    containerSelector,
+    formParameters
+};

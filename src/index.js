@@ -1,4 +1,4 @@
-import Card from "./components/Card.js";
+import Card from "./pages/Card.js";
 import FormValidator from "./components/FormValidator.js";
 import PopupWithImage from "./components/PopupWithImage.js";
 import PopupWithForm from "./components/PopupWithForm.js";
@@ -10,31 +10,26 @@ import {
     initialCards,
     formAdd,
     formEdit,
+    popupAdd,
+    popupEdit,
     containerSelector,
-    popupImageSelector
-} from "./scripts/constants.js";
+    popupImageSelector,
+    profileName,
+    profileDescription,
+    formParameters,
+    cardTemplate
+} from "./utils/constants.js";
 import "./pages/index.css";
 
-const formParameters = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__submit-button',
-    inactiveButtonClass: 'popup__submit-button_disabled',
-    inputErrorClass: 'popup__input_error',
-    errorClass: 'popup__input-error_active'
-};
+const userInfo = new UserInfo({ profileName: profileName, profileDescription: profileDescription });
+const popupImage = new PopupWithImage(popupImageSelector);
 
-const userInfo = new UserInfo({ profileName: '.profile__name', profileDescription: '.profile__description' });
 
 const renderCard = (card) => {
     const newCard = new Card({
         data: card,
-        handleCardClick: () => {
-            const popupImage = new PopupWithImage(popupImageSelector);
-            popupImage.setEventListeners();
-            popupImage.open(card);
-        }
-    }, '.template');
+        handleCardClick: () => popupImage.open(card)
+    }, cardTemplate);
     return newCard.render();
 };
 
@@ -45,26 +40,27 @@ const cardList = new Section({
     containerSelector
 );
 
-const addForm = new PopupWithForm(
-    '.popup_add',
+const addCardForm = new PopupWithForm(
+    popupAdd,
     (formData) => {
         const element = renderCard(formData);
         cardList.addItem(element);
     }
 );
 
-const editForm = new PopupWithForm(
-    '.popup_edit',
+const editUserProfileForm = new PopupWithForm(
+    popupEdit,
     (formData) => {userInfo.setUserInfo(formData)}
 );
 
-const formEditClass = new FormValidator(formParameters, formEdit);
-const formAddClass = new FormValidator(formParameters, formAdd);
+const formEditValidator = new FormValidator(formParameters, formEdit);
+const formAddCardValidator = new FormValidator(formParameters, formAdd);
 
-formEditClass.enableValidation();
-formAddClass.enableValidation();
-editForm.setEventListeners();
-addForm.setEventListeners();
-editButton.addEventListener('click', editForm.open.bind(editForm));
-addButton.addEventListener('click', addForm.open.bind(addForm));
+formEditValidator.enableValidation();
+formAddCardValidator.enableValidation();
+editUserProfileForm.setEventListeners();
+addCardForm.setEventListeners();
+editButton.addEventListener('click', editUserProfileForm.open.bind(editUserProfileForm));
+addButton.addEventListener('click', addCardForm.open.bind(addCardForm));
+popupImage.setEventListeners();
 cardList.renderItems();
