@@ -21,6 +21,7 @@ const formEdit = document.querySelector(formEditSelector);
 const formAdd = document.querySelector(formAddSelector);
 const imageCloseButton = document.querySelector('.popup-image__close-button');
 const containerSelector = '.elements__grid';
+const popupSubmitButton = document.querySelector(popupAdd).querySelector('.popup__submit-button');
 
 const initialCards = [
     {
@@ -78,5 +79,6 @@ export {
     imageCloseButton,
     initialCards,
     containerSelector,
-    formParameters
+    formParameters,
+    popupSubmitButton
 };
