@@ -20,20 +20,19 @@ export default class Card {
         this._content = null;
     };
 
-    _elementImage = this._getTemplate().querySelector('.element__image');
-
-    _setEventListeners(card) {
+    _setEventListeners() {
         this._elementImage.addEventListener('click', this._handleCardClick);
-        card.querySelector('.element__button').addEventListener('click', this._handleLike);
-        card.querySelector('.element__delete').addEventListener('click', this._handleDelete);
+        this._content.querySelector('.element__button').addEventListener('click', this._handleLike);
+        this._content.querySelector('.element__delete').addEventListener('click', this._handleDelete);
     }
 
     render() {
         this._content = this._getTemplate();
+        this._elementImage = this._content.querySelector('.element__image');
         this._elementImage.setAttribute('alt', this._name);
         this._elementImage.setAttribute('src', this._link);
         this._content.querySelector('.element__title').textContent = this._name;
-        this._setEventListeners(this._content);
+        this._setEventListeners();
         return this._content;
     };
 }
