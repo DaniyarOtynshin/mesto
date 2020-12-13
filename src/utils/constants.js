@@ -1,9 +1,11 @@
 const popupList = Array.from(document.querySelectorAll('.popup'));
 const popupAdd = '.popup_add';
 const popupEdit = '.popup_edit';
+const popupSubmitSelector = '.popup_submit-form';
+const popupChangePhoto = '.popup_change-photo';
 
 const popupName = document.querySelector(popupEdit).querySelector('[name="name"]'); 
-const popupDescription = document.querySelector(popupEdit).querySelector('[name="description"]');
+const popupDescription = document.querySelector(popupEdit).querySelector('[name="about"]');
 
 const popupImageSelector = '.popup-image';
 
@@ -12,13 +14,16 @@ const profileDescription = '.profile__description';
 
 const cardTemplate = '.template';
 
+const changeProfilePhotoButton = document.querySelector('.profile__photo-container');
 const editButton = document.querySelector('.profile__edit-button');
 const closeButtons = document.querySelectorAll('.popup__button');
 const addButton = document.querySelector('.profile__add-button');
 const formEditSelector = '.popup__form_edit';
 const formAddSelector = '.popup__form_add';
+const formChangePhotoSelector = '.popup__form_change-photo';
 const formEdit = document.querySelector(formEditSelector);
 const formAdd = document.querySelector(formAddSelector);
+const formChangePhoto = document.querySelector(formChangePhotoSelector);
 const imageCloseButton = document.querySelector('.popup-image__close-button');
 const containerSelector = '.elements__grid';
 const popupSubmitButton = document.querySelector(popupAdd).querySelector('.popup__submit-button');
@@ -64,13 +69,17 @@ export {
     addButton,
     formAddSelector,
     formEditSelector,
+    formChangePhotoSelector,
     formAdd,
     formEdit,
+    formChangePhoto,
     closeButtons,
     cardTemplate,
     popupImageSelector,
     popupAdd,
     popupEdit,
+    popupSubmitSelector,
+    popupChangePhoto,
     popupName,
     popupDescription,
     profileName,
@@ -80,5 +89,6 @@ export {
     initialCards,
     containerSelector,
     formParameters,
-    popupSubmitButton
+    popupSubmitButton,
+    changeProfilePhotoButton
 };

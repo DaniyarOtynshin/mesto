@@ -1,9 +1,9 @@
 .element__button_active{
-    width: 21px;
+    width: 20px;
     height: 18.13px;
     margin: 0;
     background: transparent;
-    background-image: url(../../../../images/Group_active.svg);
-    background-repeat: no-repeat;
+    background-image: url(../../../../images/like_active.svg);
     border: none;
+    outline: none;
 }

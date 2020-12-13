@@ -9,6 +9,7 @@
     background-image: url(../../../images/Trash.svg);
     background-repeat: no-repeat;
     border: none;
+    outline: none;
     z-index: 1;
 }
 

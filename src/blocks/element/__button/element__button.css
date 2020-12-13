@@ -1,11 +1,11 @@
 .element__button{
-    width: 21px;
+    width: 20px;
     height: 18.13px;
     margin: 0;
     background: transparent;
-    background-image: url(../../../images/Group.svg);
-    background-repeat: no-repeat;
+    background-image: url(../../../images/like.svg);
     border: none;
+    outline: none;
 }
 
 .element__button:hover{
