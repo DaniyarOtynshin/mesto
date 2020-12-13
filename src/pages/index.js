@@ -25,6 +25,7 @@ import {
     popupDescription,
     profileName,
     profileDescription,
+    profileAvatar,
     formParameters,
     cardTemplate,
     popupSubmitButton,
@@ -39,7 +40,7 @@ const api = new Api('https://mesto.nomoreparties.co/v1/cohort-18/', '992a3ad3-23
 const userData = api.getUserInfo();
 
 function renderLoading(isLoading, popup, text) {
-    const button = document.querySelector(popup).querySelector('.popup__submit-button');
+    const button = document.querySelector(popup).querySelector(formParameters.submitButtonSelector);
     if (isLoading) {
         button.textContent = 'Сохранение...';
     } else {
@@ -53,7 +54,7 @@ function renderProfile() {
         .then(res => {
             document.querySelector(profileName).textContent = res.name;
             document.querySelector(profileDescription).textContent = res.about;
-            document.querySelector('.profile__avatar').setAttribute('src', res.avatar);
+            document.querySelector(profileAvatar).setAttribute('src', res.avatar);
         })
 }
 
@@ -114,7 +115,7 @@ const setPopupForm = function (formType) {
             popupDescription.value = userData.about;
         })
     } else if (formType === formChangePhoto) {
-        const button = formChangePhoto.querySelector('.popup__submit-button');
+        const button = formChangePhoto.querySelector(formParameters.submitButtonSelector);
         button.setAttribute('disabled', true);
         button.classList.add('popup__submit-button_disabled'); 
     }
@@ -123,7 +124,7 @@ const setPopupForm = function (formType) {
 const addCardForm = new PopupWithForm(
     popupAdd,
     (formData) => {
-        const text = document.querySelector(popupAdd).querySelector('.popup__submit-button').textContent;
+        const text = document.querySelector(popupAdd).querySelector(formParameters.submitButtonSelector).textContent;
         renderLoading(true, popupAdd, text);
         api.addNewCard(formData)
             .then(res => {
@@ -139,7 +140,7 @@ const addCardForm = new PopupWithForm(
 const editUserProfileForm = new PopupWithForm(
     popupEdit,
     (formData) => {
-        const text = document.querySelector(popupEdit).querySelector('.popup__submit-button').textContent;
+        const text = document.querySelector(popupEdit).querySelector(formParameters.submitButtonSelector).textContent;
         renderLoading(true, popupEdit, text);
         api.changeUserInfo(formData)
             .then(res => {
@@ -154,11 +155,11 @@ const editUserProfileForm = new PopupWithForm(
 const editUserProfilePhoto = new PopupWithForm(
     popupChangePhoto,
     (formData) => {
-        const text = document.querySelector(popupChangePhoto).querySelector('.popup__submit-button').textContent;
+        const text = document.querySelector(popupChangePhoto).querySelector(formParameters.submitButtonSelector).textContent;
         renderLoading(true, popupChangePhoto, text);
         const newAvatar = api.changeUserPhoto(formData);
         newAvatar
-            .then(res => document.querySelector('.profile__avatar').setAttribute('src', res.avatar))
+            .then(res => document.querySelector(profileAvatar).setAttribute('src', res.avatar))
             .catch(err => console.log(err))
             .finally(() => {renderLoading(false, popupChangePhoto, text)})
     },

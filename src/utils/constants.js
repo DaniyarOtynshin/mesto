@@ -11,7 +11,7 @@ const popupImageSelector = '.popup-image';
 
 const profileName = '.profile__name';
 const profileDescription = '.profile__description';
-
+const profileAvatar = '.profile__avatar';
 const cardTemplate = '.template';
 
 const changeProfilePhotoButton = document.querySelector('.profile__photo-container');
@@ -84,6 +84,7 @@ export {
     popupDescription,
     profileName,
     profileDescription,
+    profileAvatar,
     popupList,
     imageCloseButton,
     initialCards,
