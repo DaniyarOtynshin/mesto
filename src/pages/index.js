@@ -14,26 +14,26 @@ import {
     formAdd,
     formEdit,
     formChangePhoto,
-    popupAdd,
-    popupEdit,
+    popupAddSelector,
+    popupEditSelector,
     popupSubmitSelector,
-    popupChangePhoto,
+    popupChangePhotoSelector,
     containerSelector,
     popupImageSelector,
     formChangePhotoSelector,
     popupName,
     popupDescription,
-    profileName,
-    profileDescription,
-    profileAvatar,
+    profileNameSelector,
+    profileDescriptionSelector,
+    profileAvatarSelector,
     formParameters,
-    cardTemplate,
+    cardTemplateSelector,
     popupSubmitButton,
     changeProfilePhotoButton
 } from "../utils/constants.js";
 import "./index.css";
 
-const userInfo = new UserInfo({ profileName: profileName, profileDescription: profileDescription });
+const userInfo = new UserInfo({ profileName: profileNameSelector, profileDescription: profileDescriptionSelector });
 const popupImage = new PopupWithImage(popupImageSelector);
 
 const api = new Api('https://mesto.nomoreparties.co/v1/cohort-18/', '992a3ad3-237d-4b2f-8424-0245e20d32b7');
@@ -52,9 +52,9 @@ function renderProfile() {
     const userInfo = api.getUserInfo();
     userInfo
         .then(res => {
-            document.querySelector(profileName).textContent = res.name;
-            document.querySelector(profileDescription).textContent = res.about;
-            document.querySelector(profileAvatar).setAttribute('src', res.avatar);
+            document.querySelector(profileNameSelector).textContent = res.name;
+            document.querySelector(profileDescriptionSelector).textContent = res.about;
+            document.querySelector(profileAvatarSelector).setAttribute('src', res.avatar);
         })
 }
 
@@ -81,7 +81,7 @@ const renderCard = (card) => {
             })
             popupSubmit.open()
         }
-    }, cardTemplate);
+    }, cardTemplateSelector);
     userData
         .then(userData => {
             newCard._likes.forEach(author => {
@@ -122,46 +122,46 @@ const setPopupForm = function (formType) {
 }
 
 const addCardForm = new PopupWithForm(
-    popupAdd,
+    popupAddSelector,
     (formData) => {
-        const text = document.querySelector(popupAdd).querySelector(formParameters.submitButtonSelector).textContent;
-        renderLoading(true, popupAdd, text);
+        const text = document.querySelector(popupAddSelector).querySelector(formParameters.submitButtonSelector).textContent;
+        renderLoading(true, popupAddSelector, text);
         api.addNewCard(formData)
             .then(res => {
                 const element = renderCard(res);
                 cardList.addItem(element);
             })
             .catch(err => console.log(err))
-            .finally(() => {renderLoading(false, popupAdd, text)})
+            .finally(() => {renderLoading(false, popupAddSelector, text)})
     },
     setPopupForm
 );
 
 const editUserProfileForm = new PopupWithForm(
-    popupEdit,
+    popupEditSelector,
     (formData) => {
-        const text = document.querySelector(popupEdit).querySelector(formParameters.submitButtonSelector).textContent;
-        renderLoading(true, popupEdit, text);
+        const text = document.querySelector(popupEditSelector).querySelector(formParameters.submitButtonSelector).textContent;
+        renderLoading(true, popupEditSelector, text);
         api.changeUserInfo(formData)
             .then(res => {
                 userInfo.setUserInfo(res)
             })
             .catch(err => console.log(err))
-            .finally(() => {renderLoading(false, popupEdit, text)})
+            .finally(() => {renderLoading(false, popupEditSelector, text)})
     },
     setPopupForm
 );
 
 const editUserProfilePhoto = new PopupWithForm(
-    popupChangePhoto,
+    popupChangePhotoSelector,
     (formData) => {
-        const text = document.querySelector(popupChangePhoto).querySelector(formParameters.submitButtonSelector).textContent;
-        renderLoading(true, popupChangePhoto, text);
+        const text = document.querySelector(popupChangePhotoSelector).querySelector(formParameters.submitButtonSelector).textContent;
+        renderLoading(true, popupChangePhotoSelector, text);
         const newAvatar = api.changeUserPhoto(formData);
         newAvatar
-            .then(res => document.querySelector(profileAvatar).setAttribute('src', res.avatar))
+            .then(res => document.querySelector(profileAvatarSelector).setAttribute('src', res.avatar))
             .catch(err => console.log(err))
-            .finally(() => {renderLoading(false, popupChangePhoto, text)})
+            .finally(() => {renderLoading(false, popupChangePhotoSelector, text)})
     },
     setPopupForm
 );

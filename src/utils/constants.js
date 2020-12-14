@@ -1,18 +1,18 @@
 const popupList = Array.from(document.querySelectorAll('.popup'));
-const popupAdd = '.popup_add';
-const popupEdit = '.popup_edit';
+const popupAddSelector = '.popup_add';
+const popupEditSelector = '.popup_edit';
 const popupSubmitSelector = '.popup_submit-form';
-const popupChangePhoto = '.popup_change-photo';
+const popupChangePhotoSelector = '.popup_change-photo';
 
-const popupName = document.querySelector(popupEdit).querySelector('[name="name"]'); 
-const popupDescription = document.querySelector(popupEdit).querySelector('[name="about"]');
+const popupName = document.querySelector(popupEditSelector).querySelector('[name="name"]'); 
+const popupDescription = document.querySelector(popupEditSelector).querySelector('[name="about"]');
 
 const popupImageSelector = '.popup-image';
 
-const profileName = '.profile__name';
-const profileDescription = '.profile__description';
-const profileAvatar = '.profile__avatar';
-const cardTemplate = '.template';
+const profileNameSelector = '.profile__name';
+const profileDescriptionSelector = '.profile__description';
+const profileAvatarSelector = '.profile__avatar';
+const cardTemplateSelector = '.template';
 
 const changeProfilePhotoButton = document.querySelector('.profile__photo-container');
 const editButton = document.querySelector('.profile__edit-button');
@@ -26,34 +26,7 @@ const formAdd = document.querySelector(formAddSelector);
 const formChangePhoto = document.querySelector(formChangePhotoSelector);
 const imageCloseButton = document.querySelector('.popup-image__close-button');
 const containerSelector = '.elements__grid';
-const popupSubmitButton = document.querySelector(popupAdd).querySelector('.popup__submit-button');
-
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
+const popupSubmitButton = document.querySelector(popupAddSelector).querySelector('.popup__submit-button');
 
 const formParameters = {
     formSelector: '.popup__form',
@@ -74,20 +47,19 @@ export {
     formEdit,
     formChangePhoto,
     closeButtons,
-    cardTemplate,
+    cardTemplateSelector,
     popupImageSelector,
-    popupAdd,
-    popupEdit,
+    popupAddSelector,
+    popupEditSelector,
     popupSubmitSelector,
-    popupChangePhoto,
+    popupChangePhotoSelector,
     popupName,
     popupDescription,
-    profileName,
-    profileDescription,
-    profileAvatar,
+    profileNameSelector,
+    profileDescriptionSelector,
+    profileAvatarSelector,
     popupList,
     imageCloseButton,
-    initialCards,
     containerSelector,
     formParameters,
     popupSubmitButton,
