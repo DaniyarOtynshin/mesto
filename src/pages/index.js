@@ -34,7 +34,6 @@ const userInfo = new UserInfo({
     profileDescriptionSelector: profileDescriptionSelector,
     profileAvatarSelector: profileAvatarSelector
 });
-
 let userId;
 
 const popupImage = new PopupWithImage(popupImageSelector);
