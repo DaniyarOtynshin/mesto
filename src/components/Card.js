@@ -4,7 +4,7 @@ export default class Card {
         this._link = data.link;
         this._likes = data.likes;
         this._id = data._id;
-        this.owner = data.owner;
+        this._owner = data.owner;
         this._handleCardClick = handleCardClick;
         this._handleLikeClick = handleLikeClick;
         this._handleDislikeClick = handleDislikeClick;
@@ -20,12 +20,8 @@ export default class Card {
     _handleLike = () => {
         const likeButton = this._content.querySelector('.element__button')
         if (likeButton.classList.contains('element__button_active')) {
-            likeButton.classList.toggle('element__button_active');
-            this._content.querySelector('.element__likes').textContent = --this._likes.length
             this._handleDislikeClick(this._id);
         } else {
-            likeButton.classList.toggle('element__button_active');
-            this._content.querySelector('.element__likes').textContent = ++this._likes.length
             this._handleLikeClick(this._id);
         }
     };
@@ -34,9 +30,23 @@ export default class Card {
         this._content.querySelector('.element__delete').classList.add('element__delete_inactive');
     }
 
-    handleToggleLike(likes) {
+    handleToggleLike({ likes }) {
         this._content.querySelector('.element__button').classList.toggle('element__button_active');
-        this._content.querySelector('.element__likes').textContent = likes;
+        this._content.querySelector('.element__likes').textContent = likes.length;
+    }
+
+    checkLikeState(data) {
+        this._likes.forEach(author => {
+            if (author._id === data._id) {
+                this.handleToggleLike({ likes: this._likes })
+            }
+        })
+    }
+
+    checkLikeOwner(data) {
+        if (this._owner._id !== data._id) {
+            this.inactivateDelete();
+        }
     }
 
     handleDelete = () => {

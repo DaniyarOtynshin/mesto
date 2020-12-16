@@ -26,7 +26,6 @@ const formAdd = document.querySelector(formAddSelector);
 const formChangePhoto = document.querySelector(formChangePhotoSelector);
 const imageCloseButton = document.querySelector('.popup-image__close-button');
 const containerSelector = '.elements__grid';
-const popupSubmitButton = document.querySelector(popupAddSelector).querySelector('.popup__submit-button');
 
 const formParameters = {
     formSelector: '.popup__form',
@@ -62,6 +61,5 @@ export {
     imageCloseButton,
     containerSelector,
     formParameters,
-    popupSubmitButton,
     changeProfilePhotoButton
 };

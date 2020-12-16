@@ -2,7 +2,14 @@ export default class Api {
     constructor(url, authorization) {
         this._url = url;
         this._authorization = authorization;
-    }
+    };
+
+    _checkResponse(res) {
+        if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      };
 
     getInitialCards() {
         return fetch(`${this._url}cards`, {
@@ -10,14 +17,8 @@ export default class Api {
               authorization: this._authorization
             }
           })
-        .then((res) => {
-            if (res.ok) {
-              return res.json();
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
-        .catch(err => console.log(err))
-    }
+        .then((res) => this._checkResponse(res))
+    };
 
     changeUserInfo({ name, about }) {
         return fetch(`${this._url}users/me`, {
@@ -31,14 +32,8 @@ export default class Api {
               about: about
             })
         })
-        .then((res) => {
-            if (res.ok) {
-              return res.json();
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
-        .catch(err => console.log(err))
-    }
+        .then((res) => this._checkResponse(res))
+    };
 
     addNewCard({ name, link }) {
         return fetch(`${this._url}cards`, {
@@ -52,14 +47,8 @@ export default class Api {
               link: link
             })
         })
-        .then((res) => {
-            if (res.ok) {
-              return res.json();
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
-        .catch(err => console.log(err))
-    }
+        .then((res) => this._checkResponse(res))
+    };
 
     deleteCard(id) {
         return fetch(`${this._url}cards/${id}`, {
@@ -68,14 +57,8 @@ export default class Api {
                 authorization: this._authorization
             }
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
-        .catch(err => console.log(err))
-        }
+        .then((res) => this._checkResponse(res))
+    };
 
     changeUserPhoto( {link} ) {
         return fetch(`${this._url}users/me/avatar`, {
@@ -88,14 +71,8 @@ export default class Api {
             avatar: link
             })
         })
-        .then((res) => {
-            if (res.ok) {
-            return res.json();
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
-        .catch(err => console.log(err))
-        }
+        .then((res) => this._checkResponse(res))
+    };
 
     getUserInfo() {
         return fetch(`${this._url}users/me`, {
@@ -103,14 +80,8 @@ export default class Api {
                 authorization: this._authorization
             }
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
-        .catch(err => console.log(err))
-  }
+        .then((res) => this._checkResponse(res))
+    };
 
     like(id) {
         return fetch(`${this._url}cards/likes/${id}`, {
@@ -119,14 +90,8 @@ export default class Api {
                 authorization: this._authorization
             }
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
-        .catch(err => console.log(err))
-        }
+        .then((res) => this._checkResponse(res))
+    };
 
     dislike(id) {
         return fetch(`${this._url}cards/likes/${id}`, {
@@ -135,12 +100,10 @@ export default class Api {
                 authorization: this._authorization
             }
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
-        .catch(err => console.log(err))
-        }
+        .then((res) => this._checkResponse(res))
+    };
+
+    renderPage() {
+        return Promise.all([this.getInitialCards(), this.getUserInfo()])
+    }
 }

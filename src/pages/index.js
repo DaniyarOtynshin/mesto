@@ -11,9 +11,6 @@ import {
     addButton,
     formAddSelector,
     formEditSelector,
-    formAdd,
-    formEdit,
-    formChangePhoto,
     popupAddSelector,
     popupEditSelector,
     popupSubmitSelector,
@@ -28,16 +25,29 @@ import {
     profileAvatarSelector,
     formParameters,
     cardTemplateSelector,
-    popupSubmitButton,
     changeProfilePhotoButton
 } from "../utils/constants.js";
 import "./index.css";
 
-const userInfo = new UserInfo({ profileName: profileNameSelector, profileDescription: profileDescriptionSelector });
+const userInfo = new UserInfo({
+    profileNameSelector: profileNameSelector,
+    profileDescriptionSelector: profileDescriptionSelector,
+    profileAvatarSelector: profileAvatarSelector
+});
+
+let userId;
+
 const popupImage = new PopupWithImage(popupImageSelector);
 
 const api = new Api('https://mesto.nomoreparties.co/v1/cohort-18/', '992a3ad3-237d-4b2f-8424-0245e20d32b7');
 const userData = api.getUserInfo();
+
+userData
+    .then(data => {
+        userId = data._id;
+        userInfo.setUserInfo(data);
+    })
+    .catch(err => console.error(err))
 
 function renderLoading(isLoading, popup, text) {
     const button = document.querySelector(popup).querySelector(formParameters.submitButtonSelector);
@@ -48,77 +58,69 @@ function renderLoading(isLoading, popup, text) {
     }
 }
 
-function renderProfile() {
-    const userInfo = api.getUserInfo();
-    userInfo
-        .then(res => {
-            document.querySelector(profileNameSelector).textContent = res.name;
-            document.querySelector(profileDescriptionSelector).textContent = res.about;
-            document.querySelector(profileAvatarSelector).setAttribute('src', res.avatar);
-        })
-}
-
-const popupSubmit = new PopupWithSubmit(
-    popupSubmitSelector)
-
 const renderCard = (card) => {
     const newCard = new Card({
         data: card,
         handleCardClick: () => popupImage.open(card),
         handleLikeClick: (id) => {
             const like = api.like(id);
-            like.catch(err => console.error(err))
+            like
+            .then(data => newCard.handleToggleLike(data))
+                .catch(err => console.error(err))
         },
         handleDislikeClick: (id) => {
             const dislike = api.dislike(id);
-            dislike.catch(err => console.error(err))
+            dislike
+                .then(data => newCard.handleToggleLike(data))
+                .catch(err => console.error(err))
         },
         handleDeleteClick: () => {
             popupSubmit.setSubmitAction(() => {
                 api.deleteCard(newCard._id)
-                    .then(res => newCard.handleDelete(newCard._id))
+                    .then(_ => newCard.handleDelete(newCard._id))
                     .catch(err => console.error(err))
             })
             popupSubmit.open()
         }
     }, cardTemplateSelector);
     userData
-        .then(userData => {
-            newCard._likes.forEach(author => {
-                if (author._id === userData._id) {
-                    newCard.handleToggleLike(newCard._likes.length)
-                }
-            })
-            if (newCard.owner._id !== userData._id) {
-                newCard.inactivateDelete();
-            }
+        .then(data => {
+            newCard.checkLikeState(data)
+            newCard.checkLikeOwner(data)
         })
     return newCard.render();
 };
 
 const cardList = new Section(renderCard, containerSelector);
-const initialCards = api.getInitialCards();
 
-initialCards
-    .then(cards => {
-        cardList.renderItems(cards);
-    })
-
-const setPopupForm = function (formType) {
-    if (formType === formAdd) {
-        popupSubmitButton.setAttribute('disabled', true);
-        popupSubmitButton.classList.add('popup__submit-button_disabled'); 
-    } else if (formType === formEdit) {
-        const userData = api.getUserInfo();
-        userData.then(userData => {
-            popupName.value = userData.name;
-            popupDescription.value = userData.about;
+function renderPage() {
+    api.renderPage()
+        .then(data => {
+            const [ cards, userData ] = data;
+            cardList.renderItems(cards);
+            userInfo.setUserInfo(userData)
         })
-    } else if (formType === formChangePhoto) {
-        const button = formChangePhoto.querySelector(formParameters.submitButtonSelector);
-        button.setAttribute('disabled', true);
-        button.classList.add('popup__submit-button_disabled'); 
-    }
+        .catch(err => console.error(err))
+}
+
+const popupSubmit = new PopupWithSubmit(
+    popupSubmitSelector)
+
+function setAddPopupForm() {
+    formAddCardValidator.resetErrors()
+    formAddCardValidator.disableSubmitButton(formParameters.submitButtonSelector);
+}
+
+function setEditPopupForm() {
+    formEditValidator.resetErrors()
+    const userData = userInfo.getUserInfo()
+    popupName.value = userData.name;
+    popupDescription.value = userData.about;
+}
+
+function setEditPhotoPopupForm() {
+    formChangePhotoValidator.resetErrors()
+    formChangePhotoValidator.disableSubmitButton(formParameters.submitButtonSelector);
 }
 
 const addCardForm = new PopupWithForm(
@@ -130,11 +132,12 @@ const addCardForm = new PopupWithForm(
             .then(res => {
                 const element = renderCard(res);
                 cardList.addItem(element);
+                addCardForm.close();
             })
-            .catch(err => console.log(err))
+            .catch(err => console.error(err))
             .finally(() => {renderLoading(false, popupAddSelector, text)})
     },
-    setPopupForm
+    setAddPopupForm
 );
 
 const editUserProfileForm = new PopupWithForm(
@@ -144,12 +147,13 @@ const editUserProfileForm = new PopupWithForm(
         renderLoading(true, popupEditSelector, text);
         api.changeUserInfo(formData)
             .then(res => {
-                userInfo.setUserInfo(res)
+                userInfo.setUserInfo(res);
+                editUserProfileForm.close();
             })
-            .catch(err => console.log(err))
+            .catch(err => console.error(err))
             .finally(() => {renderLoading(false, popupEditSelector, text)})
     },
-    setPopupForm
+    setEditPopupForm
 );
 
 const editUserProfilePhoto = new PopupWithForm(
@@ -159,18 +163,21 @@ const editUserProfilePhoto = new PopupWithForm(
         renderLoading(true, popupChangePhotoSelector, text);
         const newAvatar = api.changeUserPhoto(formData);
         newAvatar
-            .then(res => document.querySelector(profileAvatarSelector).setAttribute('src', res.avatar))
-            .catch(err => console.log(err))
+            .then(res => {
+                userInfo.setUserAvatar(res);
+                editUserProfilePhoto.close();
+            })
+            .catch(err => console.error(err))
             .finally(() => {renderLoading(false, popupChangePhotoSelector, text)})
     },
-    setPopupForm
+    setEditPhotoPopupForm
 );
 
 const formEditValidator = new FormValidator(formParameters, formEditSelector);
 const formAddCardValidator = new FormValidator(formParameters, formAddSelector);
 const formChangePhotoValidator = new FormValidator(formParameters, formChangePhotoSelector);
 
-renderProfile();
+renderPage();
 formChangePhotoValidator.enableValidation();
 formEditValidator.enableValidation();
 formAddCardValidator.enableValidation();
