@@ -1,5 +1,5 @@
 export default class Card {
-    constructor({ data, handleCardClick, handleLikeClick, handleDislikeClick, handleDeleteClick }, cardSelector) {
+    constructor({ data, handleCardClick, handleLikeClick, handleDislikeClick, handleDeleteClick }, cardSelector, userId) {
         this._name = data.name;
         this._link = data.link;
         this._likes = data.likes;
@@ -10,6 +10,7 @@ export default class Card {
         this._handleDislikeClick = handleDislikeClick;
         this._handleDeleteClick = handleDeleteClick;
         this._cardSelector = cardSelector;
+        this._userId = userId;
     };
 
     _getTemplate() {
@@ -35,19 +36,18 @@ export default class Card {
         this._content.querySelector('.element__likes').textContent = likes.length;
     }
 
-    checkLikeState(data) {
-        this._likes.forEach(author => {
-            if (author._id === data._id) {
-                this.handleToggleLike({ likes: this._likes })
-            }
-        })
+    _checkLikeState() {
+        if(this._likes.some(author => author._id === this._userId)) {
+          this.handleToggleLike({ likes: this._likes });      
+        }
     }
 
-    checkLikeOwner(data) {
-        if (this._owner._id !== data._id) {
+    _checkLikeOwner() {
+        if (this._owner._id !== this._userId) {
             this.inactivateDelete();
         }
     }
+
 
     handleDelete = () => {
         this._content.remove();
@@ -68,6 +68,8 @@ export default class Card {
         this._content.querySelector('.element__title').textContent = this._name;
         this._content.querySelector('.element__likes').textContent = this._likes.length;
         this._setEventListeners();
+        this._checkLikeOwner();
+        this._checkLikeState();
         return this._content;
     };
 }

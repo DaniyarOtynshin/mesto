@@ -39,14 +39,6 @@ let userId;
 const popupImage = new PopupWithImage(popupImageSelector);
 
 const api = new Api('https://mesto.nomoreparties.co/v1/cohort-18/', '992a3ad3-237d-4b2f-8424-0245e20d32b7');
-const userData = api.getUserInfo();
-
-userData
-    .then(data => {
-        userId = data._id;
-        userInfo.setUserInfo(data);
-    })
-    .catch(err => console.error(err))
 
 function renderLoading(isLoading, popup, text) {
     const button = document.querySelector(popup).querySelector(formParameters.submitButtonSelector);
@@ -81,12 +73,11 @@ const renderCard = (card) => {
             })
             popupSubmit.open()
         }
-    }, cardTemplateSelector);
-    userData
-        .then(data => {
-            newCard.checkLikeState(data)
-            newCard.checkLikeOwner(data)
-        })
+    },
+    cardTemplateSelector,
+    userId
+    );
+
     return newCard.render();
 };
 
@@ -96,8 +87,9 @@ function renderPage() {
     api.renderPage()
         .then(data => {
             const [ cards, userData ] = data;
+            userId = userData._id;
             cardList.renderItems(cards);
-            userInfo.setUserInfo(userData)
+            userInfo.setUserInfo(userData);
         })
         .catch(err => console.error(err))
 }
@@ -107,7 +99,7 @@ const popupSubmit = new PopupWithSubmit(
 
 function setAddPopupForm() {
     formAddCardValidator.resetErrors()
-    formAddCardValidator.disableSubmitButton(formParameters.submitButtonSelector);
+    formAddCardValidator.disableSubmitButton();
 }
 
 function setEditPopupForm() {
