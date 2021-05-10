@@ -54,14 +54,12 @@ const renderCard = (card) => {
         data: card,
         handleCardClick: () => popupImage.open(card),
         handleLikeClick: (id) => {
-            const like = api.like(id);
-            like
-            .then(data => newCard.handleToggleLike(data))
+            api.like(id)
+                .then(data => newCard.handleToggleLike(data))
                 .catch(err => console.error(err))
         },
         handleDislikeClick: (id) => {
-            const dislike = api.dislike(id);
-            dislike
+            api.dislike(id)
                 .then(data => newCard.handleToggleLike(data))
                 .catch(err => console.error(err))
         },

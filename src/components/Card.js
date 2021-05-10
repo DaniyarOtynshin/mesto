@@ -38,7 +38,7 @@ export default class Card {
 
     _checkLikeState() {
         if(this._likes.some(author => author._id === this._userId)) {
-          this.handleToggleLike({ likes: this._likes });      
+          this.handleToggleLike({ likes: this._likes });
         }
     }
 
