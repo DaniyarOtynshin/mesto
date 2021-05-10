@@ -30,4 +30,4 @@ export default class Popup {
         this._popup.querySelector('.popup__button').addEventListener('click', this.close.bind(this));
         this._popup.addEventListener('mousedown', this._handleCloseByOverlay.bind(this));
     };
-}
+};
